@@ -1,3 +1,1 @@
-import { longestPalindrome } from "./lessons/leasons-1-to-10";
-
-const result = longestPalindrome("babad");
+import { longestPalindrome, regularExpressionMatching } from "./lessons/lessons-1-to-10";

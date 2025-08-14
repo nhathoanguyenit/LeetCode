@@ -85,22 +85,22 @@ export function findMedianSortedArrays(sortedArrayA: number[], sortedArrayB: num
         const partitionA = Math.floor((leftIndexA + rightIndexA) / 2);
         const partitionB = Math.floor((lengthA + lengthB + 1) / 2) - partitionA;
 
-        const maxLeftA = partitionA === 0 ? -Infinity : sortedArrayA[partitionA - 1];
-        const minRightA = partitionA === lengthA ? Infinity : sortedArrayA[partitionA];
+        const minPartitionA = partitionA === 0 ? -Infinity : sortedArrayA[partitionA - 1];
+        const maxPartitionA = partitionA === lengthA ? Infinity : sortedArrayA[partitionA];
 
-        const maxLeftB = partitionB === 0 ? -Infinity : sortedArrayB[partitionB - 1];
-        const minRightB = partitionB === lengthB ? Infinity : sortedArrayB[partitionB];
+        const minPartitionB = partitionB === 0 ? -Infinity : sortedArrayB[partitionB - 1];
+        const maxPartitionB = partitionB === lengthB ? Infinity : sortedArrayB[partitionB];
 
-        if (maxLeftA <= minRightB && maxLeftB <= minRightA) {
+        if (minPartitionA <= maxPartitionB && minPartitionB <= maxPartitionA) {
             const totalLength = lengthA + lengthB;
             if (totalLength % 2 === 0) {
-                return (Math.max(maxLeftA, maxLeftB) + Math.min(minRightA, minRightB)) / 2;
+                return (Math.max(minPartitionA, minPartitionB) + Math.min(maxPartitionA, maxPartitionB)) / 2;
             } else {
-                return Math.max(maxLeftA, maxLeftB);
+                return Math.max(minPartitionA, minPartitionB);
             }
         }
 
-        if (maxLeftA > minRightB) {
+        if (minPartitionA > maxPartitionB) {
             rightIndexA = partitionA - 1;
         } else {
             leftIndexA = partitionA + 1;
@@ -262,4 +262,34 @@ export function isPalindrome(x: number): boolean {
         n = Math.trunc(n / 10);
     }
     return n === reversedHalf || n === Math.trunc(reversedHalf / 10);
+}
+
+export function regularExpressionMatching(s: string, p: string) {
+
+    const m = s.length;
+    const n = p.length;
+
+    const dp: boolean[][] = Array.from({ length: m + 1 }, () => Array(n + 1).fill(false));
+
+    dp[0][0] = true;
+
+    for (let j = 2; j <= n; j += 1) {
+        if (p[j - 1] === '*' && dp[0][j - 2]) {
+            dp[0][j] = true;
+        }
+    }
+
+    for (let i = 1; i <= m; i++) {
+        for (let j = 1; j <= n; j++) {
+            if (p[j - 1] === '.' || p[j - 1] === s[i - 1]) {
+                dp[i][j] = dp[i - 1][j - 1];
+            } else if (p[j - 1] === '*') {
+                dp[i][j] = dp[i][j - 2];
+                if (p[j - 2] === '.' || p[j - 2] === s[i - 1]) {
+                    dp[i][j] = dp[i][j] || dp[i - 1][j];
+                }
+            }
+        }
+    }
+    return dp[m][n];
 }

@@ -6,10 +6,11 @@ import {
     lengthOfLongestSubstring,
     longestPalindrome,
     myAtoi,
+    regularExpressionMatching,
     reverseInteger,
     twoSum,
     zigZagConversion,
-} from "./leasons-1-to-10";
+} from "./lessons-1-to-10";
 
 describe("twoSum", () => {
     it("returns [0, 1] for nums = [2,7,11,15] and target = 9", () => {
@@ -282,3 +283,39 @@ describe("isPalindrome", () => {
       expect(isPalindrome(123456789)).toBe(false);
     });
   });
+
+
+describe("Regular Expression Matching", () => {
+    test("Example 1: 'aa' vs 'a'", () => {
+      expect(regularExpressionMatching("aa", "a")).toBe(false);
+    });
+  
+    test("Example 2: 'aa' vs 'a*'", () => {
+      expect(regularExpressionMatching("aa", "a*")).toBe(true);
+    });
+  
+    test("Example 3: 'ab' vs '.*'", () => {
+      expect(regularExpressionMatching("ab", ".*")).toBe(true);
+    });
+  
+    test("Additional: 'mis sissippi' vs 'mis*is*p*.'", () => {
+      expect(regularExpressionMatching("mississippi", "mis*is*p*.")).toBe(false);
+    });
+  
+    test("Additional: 'ab' vs '.*c'", () => {
+      expect(regularExpressionMatching("ab", ".*c")).toBe(false);
+    });
+  
+    test("Empty string vs pattern with '*': '' vs 'a*'", () => {
+      expect(regularExpressionMatching("", "a*")).toBe(true);
+    });
+  
+    test("Single char string: 'a' vs '.'", () => {
+      expect(regularExpressionMatching("a", ".")).toBe(true);
+    });
+  
+    test("Pattern matches entire string with '*': 'aaa' vs 'a*'", () => {
+      expect(regularExpressionMatching("aaa", "a*")).toBe(true);
+    });
+  });
+  
