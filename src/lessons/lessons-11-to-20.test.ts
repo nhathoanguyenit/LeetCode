@@ -1,5 +1,5 @@
 import { arrayToList, listToArray, normalizeTriplets } from "../utills/jest.utils";
-import { containerWithMostWater, fourSum, intToRoman, letterCombinations, longestCommonPrefix, removeNthFromEnd, romanToInt, threeSum, threeSumClosest } from "./lessons-11-to-20";
+import { containerWithMostWater, fourSum, intToRoman, isValueParentheses, letterCombinations, longestCommonPrefix, removeNthFromEnd, romanToInt, threeSum, threeSumClosest } from "./lessons-11-to-20";
 
 describe("maxArea", () => {
     it("Example 1", () => {
@@ -239,3 +239,33 @@ describe('removeNthFromEnd', () => {
         expect(listToArray(result)).toEqual([20, 30]);
     });
 });
+
+describe("isValid", () => {
+    test("should return true for ()", () => {
+      expect(isValueParentheses("()")).toBe(true);
+    });
+  
+    test("should return true for ()[]{}", () => {
+      expect(isValueParentheses("()[]{}")).toBe(true);
+    });
+  
+    test("should return false for (]", () => {
+      expect(isValueParentheses("(]")).toBe(false);
+    });
+  
+    test("should return true for ([]) ", () => {
+      expect(isValueParentheses("([])")).toBe(true);
+    });
+  
+    test("should return false for ([)] ", () => {
+      expect(isValueParentheses("([)]")).toBe(false);
+    });
+  
+    test("should return false for unmatched opening bracket", () => {
+      expect(isValueParentheses("(((")).toBe(false);
+    });
+  
+    test("should return false for unmatched closing bracket", () => {
+      expect(isValueParentheses("())")).toBe(false);
+    });
+  });
