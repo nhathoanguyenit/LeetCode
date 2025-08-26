@@ -1,4 +1,5 @@
 import { ListNode } from "../models/node-list.model";
+import { findSubstring } from "./lessons-21-to-30";
 
 export function twoSum(numbers: number[], targetSum: number): [number, number] {
     const seenNumbers = new Map<number, number>(); // value → index
@@ -293,3 +294,47 @@ export function regularExpressionMatching(s: string, p: string) {
     }
     return dp[m][n];
 }
+
+describe("findSubstring", () => {
+    it("should find concatenated substrings in example 1", () => {
+        const s = "barfoothefoobarman";
+        const words = ["foo","bar"];
+        expect(findSubstring(s, words).sort((a,b) => a-b)).toEqual([0,9]);
+    });
+
+    it("should return [] when no valid substring (example 2)", () => {
+        const s = "wordgoodgoodgoodbestword";
+        const words = ["word","good","best","word"];
+        expect(findSubstring(s, words)).toEqual([]);
+    });
+
+    it("should find multiple matches (example 3)", () => {
+        const s = "barfoofoobarthefoobarman";
+        const words = ["bar","foo","the"];
+        expect(findSubstring(s, words).sort((a,b) => a-b)).toEqual([6,9,12]);
+    });
+
+    it("should handle single word", () => {
+        const s = "aaaaa";
+        const words = ["aa"];
+        expect(findSubstring(s, words).sort((a,b) => a-b)).toEqual([0,1,2,3]);
+    });
+
+    it("should handle empty words array", () => {
+        const s = "abc";
+        const words: string[] = [];
+        expect(findSubstring(s, words)).toEqual([]);
+    });
+
+    it("should handle words with duplicates", () => {
+        const s = "wordgoodgoodgoodbestword";
+        const words = ["good","good","best","word"];
+        expect(findSubstring(s, words)).toEqual([8]);
+    });
+
+    it("should handle no matches at all", () => {
+        const s = "abcdefg";
+        const words = ["hi","jk"];
+        expect(findSubstring(s, words)).toEqual([]);
+    });
+});

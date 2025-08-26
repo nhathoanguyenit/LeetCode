@@ -24,3 +24,13 @@ export function normalizeTriplets(arr: number[][]): number[][] {
     innerSorted.sort((a, b) => a[0] - b[0] || a[1] - b[1] || a[2] - b[2]);
     return innerSorted;
 }
+
+export function buildList(arr: number[]): ListNode | null {
+    const dummy = new ListNode(0);
+    let curr = dummy;
+    for (let num of arr) {
+        curr.next = new ListNode(num);
+        curr = curr.next;
+    }
+    return dummy.next;
+}
