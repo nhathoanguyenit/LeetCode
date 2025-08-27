@@ -1,6 +1,6 @@
 import { ListNode } from "../models/node-list.model";
 import { buildList, listToArray } from "../utills/jest.utils";
-import { divide, generateParenthesis, mergeKLists, mergeTwoLists, removeDuplicates, removeElement, reverseKGroup, strStr, swapPairs } from "./lessons-21-to-30";
+import { divide, generateParenthesis, mergeKLists, mergeTwoLists, nextPermutation, removeDuplicates, removeElement, reverseKGroup, strStr, swapPairs } from "./lessons-21-to-30";
 
 describe("mergeTwoLists", () => {
     test("Example 1: [1,2,4] and [1,3,4]", () => {
@@ -308,4 +308,4 @@ describe("divide", () => {
       expect(divide(2 ** 30, 2)).toBe(2 ** 29);
       expect(divide(-(2 ** 30), 2)).toBe(-(2 ** 29));
     });
-  });
+});

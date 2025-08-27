@@ -189,39 +189,73 @@ export function divide(dividend: number, divisor: number): number {
 }
 
 export function findSubstring(s: string, words: string[]): number[] {
-    if (words.length === 0) return [];
-
-    const wordLen = words[0].length;
-    const totalLen = wordLen * words.length;
-    const wordCount: Record<string, number> = {};
-
-    for (const w of words) {
-        wordCount[w] = (wordCount[w] || 0) + 1;
-    }
-
+    const wordLength = words[0].length;
+    const numberOfWords = words.length;
+    const wordCount: Map<string, number> = new Map();
     const result: number[] = [];
 
-    for (let i = 0; i <= s.length - totalLen; i++) {
-        const seen: Record<string, number> = {};
-        const substring = s.slice(i, i + totalLen);
+    for (const word of words) {
+        wordCount.set(word, (wordCount.get(word) || 0) + 1);
+    }
 
-        let valid = true;
+    for (let i = 0; i < wordLength; i++) {
+        const seenWords: Map<string, number> = new Map();
+        let left = i;
+        let right = i;
+        let count = 0;
 
-        for (let j = 0; j < substring.length; j += wordLen) {
-            const word = substring.slice(j, j + wordLen);
-            if (!wordCount[word]) {
-                valid = false;
-                break;
-            }
-            seen[word] = (seen[word] || 0) + 1;
-            if (seen[word] > wordCount[word]) {
-                valid = false;
-                break;
+        while (right + wordLength <= s.length) {
+            const word = s.substring(right, right + wordLength);
+            right += wordLength;
+
+            if (wordCount.has(word)) {
+                seenWords.set(word, (seenWords.get(word) || 0) + 1);
+                count++;
+                while (seenWords.get(word)! > wordCount.get(word)!) {
+                    const leftWord = s.substring(left, left + wordLength);
+                    seenWords.set(leftWord, seenWords.get(leftWord)! - 1);
+                    count--;
+                    left += wordLength;
+                }
+
+                if (count === numberOfWords) {
+                    result.push(left);
+                }
+            } else {
+                seenWords.clear();
+                count = 0;
+                left = right;
             }
         }
-
-        if (valid) result.push(i);
     }
 
     return result;
+}
+
+export function nextPermutation(nums: number[]): void {
+
+    const n = nums.length;
+    let i = n - 2;
+    while (i >= 0 && nums[i] >= nums[i + 1]) {
+        i--;
+    }
+
+    if (i >= 0) {
+        let j = n - 1;
+        // 2. Find element just larger than nums[i]
+        while (nums[j] <= nums[i]) {
+            j--;
+        }
+        // 3. Swap nums[i] and nums[j]
+        [nums[i], nums[j]] = [nums[j], nums[i]];
+    }
+
+    // 4. Reverse suffix (i+1 to end)
+    let left = i + 1;
+    let right = n - 1;
+    while (left < right) {
+        [nums[left], nums[right]] = [nums[right], nums[left]];
+        left++;
+        right--;
+    }
 }
