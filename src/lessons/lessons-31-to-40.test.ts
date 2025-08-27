@@ -1,6 +1,4 @@
-import { ListNode } from "../models/node-list.model";
-import { buildList, listToArray } from "../utills/jest.utils";
-import { divide, generateParenthesis, mergeKLists, mergeTwoLists, nextPermutation, removeDuplicates, removeElement, reverseKGroup, strStr, swapPairs } from "./lessons-21-to-30";
+import { nextPermutation } from "./lessons-21-to-30";
 
 describe("nextPermutation", () => {
     test("basic examples", () => {
