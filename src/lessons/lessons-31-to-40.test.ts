@@ -1,6 +1,7 @@
 import { nextPermutation } from "./lessons-21-to-30";
 import {
     combinationSum,
+    combinationSum2,
     findFirstAndLastPositionSortedArray,
     isValidSudoku,
     longestValidParentheses,
@@ -340,5 +341,39 @@ describe("combinationSum", () => {
     it("should handle multiple solutions", () => {
         const result = combinationSum([2, 4, 6, 8], 8);
         expect(result).toEqual(expect.arrayContaining([[2, 2, 2, 2], [2, 6], [4, 4], [8]]));
+    });
+});
+
+describe("combinationSum2", () => {
+    it("example 1", () => {
+        expect(combinationSum2([10, 1, 2, 7, 6, 1, 5], 8)).toEqual(
+            expect.arrayContaining([
+                [1, 1, 6],
+                [1, 2, 5],
+                [1, 7],
+                [2, 6],
+            ])
+        );
+    });
+
+    it("example 2", () => {
+        expect(combinationSum2([2, 5, 2, 1, 2], 5)).toEqual(expect.arrayContaining([[1, 2, 2], [5]]));
+    });
+
+    it("should return empty if no combination", () => {
+        expect(combinationSum2([3, 4, 5], 2)).toEqual([]);
+    });
+
+    it("should handle single element equal to target", () => {
+        expect(combinationSum2([4], 4)).toEqual([[4]]);
+    });
+
+    it("should handle multiple duplicates correctly", () => {
+        expect(combinationSum2([1, 1, 1, 2, 2], 4)).toEqual(
+            expect.arrayContaining([
+                [1, 1, 2],
+                [2, 2],
+            ])
+        );
     });
 });
