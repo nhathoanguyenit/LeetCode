@@ -1,3 +1,5 @@
-import { firstMissingPositive } from "./lessons/lessons-41-to-50";
+import { totalNQueens } from "./lessons/lessons-51-to-60";
 
-console.log(firstMissingPositive([3, 4, -1, 1]));
+// console.log(multiply("99", "99"));
+
+totalNQueens(4);
