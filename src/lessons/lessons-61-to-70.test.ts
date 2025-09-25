@@ -1,6 +1,6 @@
 import { ListNode } from "../models/node-list.model";
 import { buildList, listToArray } from "../utills/jest.utils";
-import { uniquePaths } from "./lessons-61-to-70";
+import { uniquePaths, uniquePathsWithObstacles } from "./lessons-61-to-70";
 
 export function rotateRight(head: ListNode | null, k: number): ListNode | null {
     if (!head || !head.next || k === 0) return head;
@@ -101,5 +101,73 @@ describe("LeetCode 62 - Unique Paths", () => {
 
     test("Large grid 10x10", () => {
         expect(uniquePaths(10, 10)).toBe(48620);
+    });
+});
+
+describe("LeetCode 63 - Unique Paths II", () => {
+    test("Example case 1", () => {
+        const grid = [
+            [0, 0, 0],
+            [0, 1, 0],
+            [0, 0, 0],
+        ];
+        expect(uniquePathsWithObstacles(grid)).toBe(2);
+    });
+
+    test("Example case 2", () => {
+        const grid = [
+            [0, 1],
+            [0, 0],
+        ];
+        expect(uniquePathsWithObstacles(grid)).toBe(1);
+    });
+
+    test("Single cell with no obstacle", () => {
+        const grid = [[0]];
+        expect(uniquePathsWithObstacles(grid)).toBe(1);
+    });
+
+    test("Single cell with obstacle", () => {
+        const grid = [[1]];
+        expect(uniquePathsWithObstacles(grid)).toBe(0);
+    });
+
+    test("Obstacle at start position", () => {
+        const grid = [
+            [1, 0],
+            [0, 0],
+        ];
+        expect(uniquePathsWithObstacles(grid)).toBe(0);
+    });
+
+    test("Obstacle at end position", () => {
+        const grid = [
+            [0, 0],
+            [0, 1],
+        ];
+        expect(uniquePathsWithObstacles(grid)).toBe(0);
+    });
+
+    test("Row fully blocked", () => {
+        const grid = [
+            [0, 0, 0],
+            [1, 1, 1],
+            [0, 0, 0],
+        ];
+        expect(uniquePathsWithObstacles(grid)).toBe(0);
+    });
+
+    test("Column fully blocked", () => {
+        const grid = [
+            [0, 1, 0],
+            [0, 1, 0],
+            [0, 1, 0],
+        ];
+        expect(uniquePathsWithObstacles(grid)).toBe(0);
+    });
+
+    test("Larger grid without obstacles", () => {
+        const grid = Array.from({ length: 3 }, () => Array(3).fill(0));
+        expect(uniquePathsWithObstacles(grid)).toBe(6);
     });
 });
