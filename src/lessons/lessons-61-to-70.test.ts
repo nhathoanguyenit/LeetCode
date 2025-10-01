@@ -1,6 +1,15 @@
 import { ListNode } from "../models/node-list.model";
 import { buildList, listToArray } from "../utills/jest.utils";
-import { uniquePaths, uniquePathsWithObstacles } from "./lessons-61-to-70";
+import {
+    addBinary,
+    fullJustify,
+    isNumber,
+    minPathSum1D,
+    mySqrt,
+    plusOne,
+    uniquePaths,
+    uniquePathsWithObstacles,
+} from "./lessons-61-to-70";
 
 export function rotateRight(head: ListNode | null, k: number): ListNode | null {
     if (!head || !head.next || k === 0) return head;
@@ -169,5 +178,175 @@ describe("LeetCode 63 - Unique Paths II", () => {
     test("Larger grid without obstacles", () => {
         const grid = Array.from({ length: 3 }, () => Array(3).fill(0));
         expect(uniquePathsWithObstacles(grid)).toBe(6);
+    });
+});
+
+describe("LeetCode 64 - Minimum Path Sum (1D DP)", () => {
+    test("Example 1", () => {
+        const grid = [
+            [1, 3, 1],
+            [1, 5, 1],
+            [4, 2, 1],
+        ];
+        expect(minPathSum1D(grid)).toBe(7);
+    });
+
+    test("Example 2", () => {
+        const grid = [
+            [1, 2, 3],
+            [4, 5, 6],
+        ];
+        expect(minPathSum1D(grid)).toBe(12);
+    });
+
+    test("Single cell grid", () => {
+        expect(minPathSum1D([[5]])).toBe(5);
+    });
+
+    test("Single row grid", () => {
+        expect(minPathSum1D([[1, 2, 3, 4]])).toBe(10);
+    });
+
+    test("Single column grid", () => {
+        expect(minPathSum1D([[1], [2], [3], [4]])).toBe(10);
+    });
+
+    test("Larger 4x4 grid", () => {
+        const grid = [
+            [1, 3, 1, 2],
+            [2, 1, 8, 1],
+            [4, 2, 1, 3],
+            [2, 3, 2, 1],
+        ];
+        expect(minPathSum1D(grid)).toBe(11);
+    });
+});
+
+describe("LeetCode 65 - Valid Number", () => {
+    test("Valid integers", () => {
+        expect(isNumber("2")).toBe(true);
+        expect(isNumber("0089")).toBe(true);
+        expect(isNumber("-42")).toBe(true);
+        expect(isNumber("+3")).toBe(true);
+    });
+
+    test("Valid decimals", () => {
+        expect(isNumber("3.14")).toBe(true);
+        expect(isNumber("-0.1")).toBe(true);
+        expect(isNumber(".1")).toBe(true);
+        expect(isNumber("2.")).toBe(true);
+    });
+
+    test("Valid scientific notation", () => {
+        expect(isNumber("2e10")).toBe(true);
+        expect(isNumber("-90E3")).toBe(true);
+        expect(isNumber("53.5e93")).toBe(true);
+        expect(isNumber("-123.456e789")).toBe(true);
+    });
+
+    test("Invalid numbers", () => {
+        expect(isNumber("abc")).toBe(false);
+        expect(isNumber("1a")).toBe(false);
+        expect(isNumber("1e")).toBe(false);
+        expect(isNumber("e3")).toBe(false);
+        expect(isNumber("99e2.5")).toBe(false);
+        expect(isNumber("--6")).toBe(false);
+        expect(isNumber("-+3")).toBe(false);
+        expect(isNumber("95a54e53")).toBe(false);
+    });
+});
+
+describe("LeetCode 66 - Plus One", () => {
+    test("Simple increment", () => {
+        expect(plusOne([1, 2, 3])).toEqual([1, 2, 4]);
+    });
+
+    test("Carryover with last digit 9", () => {
+        expect(plusOne([1, 2, 9])).toEqual([1, 3, 0]);
+    });
+
+    test("Multiple carryovers", () => {
+        expect(plusOne([9, 9, 9])).toEqual([1, 0, 0, 0]);
+    });
+
+    test("Single digit", () => {
+        expect(plusOne([0])).toEqual([1]);
+        expect(plusOne([9])).toEqual([1, 0]);
+    });
+});
+
+describe("LeetCode 67 - Add Binary", () => {
+    test("Basic cases", () => {
+        expect(addBinary("11", "1")).toBe("100");
+        expect(addBinary("1010", "1011")).toBe("10101");
+    });
+
+    test("Different lengths", () => {
+        expect(addBinary("1", "111")).toBe("1000");
+        expect(addBinary("0", "101")).toBe("101");
+    });
+
+    test("Edge cases", () => {
+        expect(addBinary("0", "0")).toBe("0");
+        expect(addBinary("111", "111")).toBe("1110");
+    });
+});
+
+describe("LeetCode 68 - Text Justification", () => {
+    test("Example case 1", () => {
+        const words = ["This", "is", "an", "example", "of", "text", "justification."];
+        const maxWidth = 16;
+        expect(fullJustify(words, maxWidth)).toEqual(["This    is    an", "example  of text", "justification.  "]);
+    });
+
+    test("Example case 2", () => {
+        const words = ["What", "must", "be", "acknowledgment", "shall", "be"];
+        const maxWidth = 16;
+        expect(fullJustify(words, maxWidth)).toEqual(["What   must   be", "acknowledgment  ", "shall be        "]);
+    });
+
+    test("Single word per line", () => {
+        const words = ["Single", "Word", "Lines"];
+        const maxWidth = 10;
+        expect(fullJustify(words, maxWidth)).toEqual(["Single    ", "Word      ", "Lines     "]);
+    });
+
+    test("Last line left-justified", () => {
+        const words = ["a", "b", "c", "d", "e"];
+        const maxWidth = 3;
+        expect(fullJustify(words, maxWidth)).toEqual(["a b", "c d", "e  "]);
+    });
+
+    test("Edge case: one word fits exactly", () => {
+        const words = ["perfect"];
+        const maxWidth = 7;
+        expect(fullJustify(words, maxWidth)).toEqual(["perfect"]);
+    });
+});
+
+describe("LeetCode 69 - Sqrt(x)", () => {
+    test("Small numbers", () => {
+        expect(mySqrt(0)).toBe(0);
+        expect(mySqrt(1)).toBe(1);
+        expect(mySqrt(2)).toBe(1); // sqrt(2) ≈ 1.41
+        expect(mySqrt(3)).toBe(1); // sqrt(3) ≈ 1.73
+        expect(mySqrt(4)).toBe(2);
+    });
+
+    test("Perfect squares", () => {
+        expect(mySqrt(9)).toBe(3);
+        expect(mySqrt(16)).toBe(4);
+        expect(mySqrt(25)).toBe(5);
+        expect(mySqrt(100)).toBe(10);
+    });
+
+    test("Non-perfect squares", () => {
+        expect(mySqrt(8)).toBe(2); // sqrt(8) ≈ 2.82
+        expect(mySqrt(15)).toBe(3); // sqrt(15) ≈ 3.87
+        expect(mySqrt(26)).toBe(5); // sqrt(26) ≈ 5.09
+    });
+
+    test("Large input", () => {
+        expect(mySqrt(2147395599)).toBe(46339); // max near sqrt(INT_MAX)
     });
 });
