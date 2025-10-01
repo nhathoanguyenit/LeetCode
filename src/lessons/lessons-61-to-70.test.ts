@@ -2,6 +2,7 @@ import { ListNode } from "../models/node-list.model";
 import { buildList, listToArray } from "../utills/jest.utils";
 import {
     addBinary,
+    climbStairs,
     fullJustify,
     isNumber,
     minPathSum1D,
@@ -349,4 +350,34 @@ describe("LeetCode 69 - Sqrt(x)", () => {
     test("Large input", () => {
         expect(mySqrt(2147395599)).toBe(46339); // max near sqrt(INT_MAX)
     });
+});
+
+describe("LeetCode 70 - Climbing Stairs", () => {
+  test("n = 1", () => {
+    expect(climbStairs(1)).toBe(1);
+  });
+
+  test("n = 2", () => {
+    expect(climbStairs(2)).toBe(2);
+  });
+
+  test("n = 3", () => {
+    expect(climbStairs(3)).toBe(3); // [1+1+1], [1+2], [2+1]
+  });
+
+  test("n = 4", () => {
+    expect(climbStairs(4)).toBe(5); 
+  });
+
+  test("n = 5", () => {
+    expect(climbStairs(5)).toBe(8); 
+  });
+
+  test("n = 10", () => {
+    expect(climbStairs(10)).toBe(89);
+  });
+
+  test("large n = 45", () => {
+    expect(climbStairs(45)).toBe(1836311903); // known Fibonacci number
+  });
 });
