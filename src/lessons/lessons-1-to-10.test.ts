@@ -11,6 +11,7 @@ import {
     twoSum,
     zigZagConversion,
 } from "./lessons-1-to-10";
+import { findSubstring } from "./lessons-21-to-30";
 
 describe("twoSum", () => {
     it("returns [0, 1] for nums = [2,7,11,15] and target = 9", () => {
