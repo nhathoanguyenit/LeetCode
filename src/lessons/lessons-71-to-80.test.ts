@@ -1,4 +1,4 @@
-import { minDistance, minWindow, searchMatrix, setZeroes, simplifyPath, sortColors } from "./lessons-71-to-80";
+import { combine, exist, minDistance, minWindow, removeDuplicates, searchMatrix, setZeroes, simplifyPath, sortColors } from "./lessons-71-to-80";
 
 describe("LeetCode 71 - Simplify Path", () => {
     test("Root only", () => {
@@ -305,5 +305,109 @@ describe("minWindow", () => {
 
   it("should return correct window with overlapping", () => {
     expect(minWindow("aaflslflsldkalskaaa", "aaa")).toBe("aaa");
+  });
+});
+
+describe("LeetCode 77 - Combinations", () => {
+  test("n = 4, k = 2", () => {
+    const result = combine(4, 2);
+    const expected = [
+      [1, 2],
+      [1, 3],
+      [1, 4],
+      [2, 3],
+      [2, 4],
+      [3, 4],
+    ];
+    expect(result).toEqual(expected);
+  });
+
+  test("n = 4, k = 3", () => {
+    const result = combine(4, 3);
+    const expected = [
+      [1, 2, 3],
+      [1, 2, 4],
+      [1, 3, 4],
+      [2, 3, 4],
+    ];
+    expect(result).toEqual(expected);
+  });
+
+  test("edge case: n = 1, k = 1", () => {
+    expect(combine(1, 1)).toEqual([[1]]);
+  });
+
+  test("edge case: n = 3, k = 0 (empty combination)", () => {
+    expect(combine(3, 0)).toEqual([[]]);
+  });
+});
+
+describe("LeetCode 79 - Word Search", () => {
+  test("example case 1", () => {
+    const board = [
+      ["A","B","C","E"],
+      ["S","F","C","S"],
+      ["A","D","E","E"]
+    ];
+    expect(exist(board, "ABCCED")).toBe(true);
+  });
+
+  test("example case 2", () => {
+    const board = [
+      ["A","B","C","E"],
+      ["S","F","C","S"],
+      ["A","D","E","E"]
+    ];
+    expect(exist(board, "SEE")).toBe(true);
+  });
+
+  test("example case 3", () => {
+    const board = [
+      ["A","B","C","E"],
+      ["S","F","C","S"],
+      ["A","D","E","E"]
+    ];
+    expect(exist(board, "ABCB")).toBe(false);
+  });
+
+  test("single letter match", () => {
+    const board = [["A"]];
+    expect(exist(board, "A")).toBe(true);
+  });
+
+  test("single letter mismatch", () => {
+    const board = [["A"]];
+    expect(exist(board, "B")).toBe(false);
+  });
+});
+
+
+describe("LeetCode 80 - Remove Duplicates from Sorted Array II", () => {
+  test("example case 1", () => {
+    const nums = [1,1,1,2,2,3];
+    const k = removeDuplicates(nums);
+    expect(k).toBe(5);
+    expect(nums.slice(0, k)).toEqual([1,1,2,2,3]);
+  });
+
+  test("example case 2", () => {
+    const nums = [0,0,1,1,1,1,2,3,3];
+    const k = removeDuplicates(nums);
+    expect(k).toBe(7);
+    expect(nums.slice(0, k)).toEqual([0,0,1,1,2,3,3]);
+  });
+
+  test("all unique", () => {
+    const nums = [1,2,3,4];
+    const k = removeDuplicates(nums);
+    expect(k).toBe(4);
+    expect(nums.slice(0, k)).toEqual([1,2,3,4]);
+  });
+
+  test("all same", () => {
+    const nums = [5,5,5,5,5];
+    const k = removeDuplicates(nums);
+    expect(k).toBe(2);
+    expect(nums.slice(0, k)).toEqual([5,5]);
   });
 });

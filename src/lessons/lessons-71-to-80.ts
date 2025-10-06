@@ -166,3 +166,76 @@ export function minWindow(s: string, t: string): string {
 
     return resultLength === Infinity ? "" : s.substring(start, end + 1);
 }
+
+export function combine(n: number, k: number): number[][] {
+    const result: number[][] = [];
+    const path: number[] = [];
+
+    function backtrack(start: number) {
+        if (path.length === k) {
+            result.push([...path]);
+            return;
+        }
+
+        for (let i = start; i <= n; i++) {
+            path.push(i);
+            backtrack(i + 1);
+            path.pop();
+        }
+    }
+
+    backtrack(1);
+    return result;
+}
+
+export function exist(board: string[][], word: string): boolean {
+    const rows = board.length;
+    const cols = board[0].length;
+
+    function dfs(r: number, c: number, index: number): boolean {
+        // if we matched all characters
+        if (index === word.length) return true;
+
+        // out of bounds or mismatch
+        if (r < 0 || c < 0 || r >= rows || c >= cols || board[r][c] !== word[index]) {
+            return false;
+        }
+
+        // mark visited (temporarily)
+        const temp = board[r][c];
+        board[r][c] = "#";
+
+        // explore 4 directions
+        const found =
+            dfs(r + 1, c, index + 1) ||
+            dfs(r - 1, c, index + 1) ||
+            dfs(r, c + 1, index + 1) ||
+            dfs(r, c - 1, index + 1);
+
+        // backtrack
+        board[r][c] = temp;
+        return found;
+    }
+
+    // try every cell as a starting point
+    for (let r = 0; r < rows; r++) {
+        for (let c = 0; c < cols; c++) {
+            if (dfs(r, c, 0)) return true;
+        }
+    }
+
+    return false;
+}
+
+export function removeDuplicates(nums: number[]): number {
+    let insertPos = 0;
+
+    for (const num of nums) {
+        if (insertPos < 2 || num > nums[insertPos - 2]) {
+            nums[insertPos] = num;
+            insertPos++;
+        }
+    }
+
+    return insertPos;
+}
